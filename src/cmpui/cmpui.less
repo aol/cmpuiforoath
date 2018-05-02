@@ -1,0 +1,273 @@
+/*
+ * Copyright 2018 AppNexus Inc.; Conversant, LLC; DMG Media Limited; Index Exchange, Inc.;
+ * MediaMath, Inc.; Oath Inc.; Quantcast Corp.; and, Sizmek, Inc.
+ * Licensed under the terms of the MIT license. See LICENSE file in project root for terms.
+ */
+
+/**
+ * Bootstrap overrides
+ */
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+.cmp-button-small {
+  flex: 1;
+  width: 150px;
+  max-width: 150px;
+  height: 56px;
+}
+
+.cmp-button-medium {
+  flex: 1;
+  width: 200px;
+  max-width: 200px;
+  height: 56px;
+}
+
+.cmp-button-large {
+  flex: 1;
+  width: 300px;
+  max-width: 300px;
+  height: 56px;
+}
+
+.cmp-button-primary {
+  background: #2D6AB1;
+  color: #ffffff;
+  font-weight: medium;
+  font-size: 22px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.cmp-button-default {
+  background: #ffffff;
+  border: 1px solid #2D6AB1;
+  color: #2D6AB1;
+  font-weight: medium;
+  font-size: 22px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.cmp-button-link {
+  color: #006CB7;
+  background: #ffffff;
+  font-size: 22px;
+  cursor: pointer;
+  border: none;
+}
+
+.cmp {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-sizing: content-box;
+  overflow: scroll;
+  max-width: 1000px;
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  background: #fff;
+  border-radius: 8px;
+  font-family: Helvetica;
+  font-size: 14px;
+  color: #000000;
+
+  .cmp-header {
+    background: #000000;
+    height: 82px;
+    padding: 0 40px;
+
+    .cmp-header-title {
+      color: #ffffff;
+      font-size: 32px;
+      font-weight: medium;
+    }
+  }
+
+  .cmp-body {
+    flex-direction: column;
+    display: flex;
+    flex: 1;
+
+    .cmp-view {
+      display: flex;
+      flex-direction: column;
+      padding: 50px 20px 0 20px;
+      margin: auto;
+      height: 100%;
+
+      .cmp-image-container {
+        padding-right: 30px;
+        margin: 0 auto;
+        height: 353px;
+        min-width: 160px;
+        max-width: 353px;
+        min-height: 353px;
+        flex: 1;
+
+        .cmp-image {
+          width: 100%;
+          height: 100%;
+          background-repeat: no-repeat;
+          background-position: center;
+        }
+      }
+
+      .cmp-content {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        min-width: 400px;
+
+        .cmp-heading {
+          font-size: 28px;
+          font-weight: bold;
+          margin-bottom: 20px;
+        }
+
+        .cmp-description {
+          line-height: 1.1;
+        }
+
+        .cmp-consent-list {
+          background: #DDEFFD;
+          min-height: 50px;
+          margin: 30px 0 20px 0;
+          padding: 20px;
+          overflow-y: scroll;
+        }
+      }
+
+      .cmp-button-bar {
+        display: flex;
+        margin-top: 30px;
+        margin-bottom: 30px;
+
+        & > button:not(:last-child) {
+          margin-right: 15px;
+        }
+      }
+
+      &.no-selections {
+        .cmp-button-acceptall {
+          .cmp-button-primary;
+        }
+
+        .cmp-button-acceptall-alt,
+        .cmp-button-save {
+          display: none;
+        }
+      }
+    }
+  }
+
+  .cmp-tooltip-icon {
+    display: inline-block;
+    background-image: url('/images/Questionmark.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    vertical-align: middle;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    margin-left: 5px;
+  }
+
+  .cmp-button-acceptall-alt {
+    display: none;
+  }
+
+  .cmp-button-save {
+    display: inline-block;
+  }
+}
+
+@media only screen and (max-width: 715px) {
+  .cmp {
+    border-radius: 0;
+
+    .cmp-body {
+      .cmp-view {
+        padding: 20px 0 !important;
+
+        .cmp-image-container {
+          margin: 10px auto 40px auto !important;
+          padding-right: 0 !important;
+          width: 100% !important;
+          height: 181px !important;
+          min-width: 0px !important;
+          min-height: 181px !important;
+          flex: 0 !important;
+        }
+
+        .cmp-content {
+          min-width: 200px !important;
+          flex: 1;
+          overflow-y: scroll;
+          margin: 0 20px 80px 20px;
+
+          .cmp-heading {
+            font-size: 20px !important;
+          }
+        }
+
+        .cmp-button-bar {
+          display: flex;
+          position: fixed;
+          flex-direction: row-reverse;
+          margin: 0 -25px;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          border-top: 1px solid #ccc;
+
+          button {
+            flex: 1;
+            width: auto !important;
+            margin: 0 !important;
+
+            &.cmp-button-default {
+              border-top: 1px solid #ccc;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .cmp-button-small,
+  .cmp-button-medium,
+  .cmp-button-large {
+    max-width: none !important;
+  }
+
+  .cmp-button-acceptall,
+  .cmp-button-back {
+    display: none;
+  }
+
+  .cmp-button-acceptall-alt {
+    .cmp-button-link;
+    float: right;
+    display: inline-block !important;
+  }
+
+  .cmp-button-save {
+    display: inline-block;
+  }
+
+  &.no-selections {
+    .cmp-button-acceptall {
+      display: inline-block;
+      .cmp-button-primary;
+    }
+    .cmp-button-save {
+      display: none;
+    }
+  }
+}
