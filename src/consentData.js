@@ -94,7 +94,7 @@ var consentData = (function (win) {
 
     var Data = (function () {
         var COOKIE_VERSION = 1;
-        var CMP_ID = 1;
+        var CMP_ID = 14;
         var CMP_VERSION = 1;
         var LOWERCASE_START = 'a'.charCodeAt(0);
         var BITFIELD_ENCODING = 0;
@@ -431,6 +431,9 @@ var consentData = (function (win) {
         getPurposeConsent: function (purposeId) {
             var mask = 1 << (fieldSize.purposesAllowed - purposeId);
             return (fields.purposesAllowed & mask) != 0;
+        },
+        setVendorListVersion: function (version) {
+            fields.vendorListVersion = version;
         },
         getVendorListVersion: function () {
             return fields.vendorListVersion;

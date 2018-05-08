@@ -88,6 +88,7 @@ window.__cmpui = new function (win) {
                 }
             }
             consentData.setMaxVendorId(maxVendorId);
+            consentData.setVendorListVersion(vendorList.vendorListVersion);
 
             // pass the purposes and vendors to the relevant controllers
             purposesCtrl.setPurposes(vendorList.purposes);
