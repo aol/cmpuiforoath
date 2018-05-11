@@ -7,8 +7,20 @@
 import Handlebars from 'handlebars';
 import 'secure-handlebars';
 
+/**
+ * UI specific utility methods
+ */
 var uiUtils = (function () {
 
+    /**
+     * Generates html markup for a checkbox with a tooltip
+     *
+     * @param {string} name
+     * @param {string} value
+     * @param {string} label
+     * @param {boolean} checked
+     * @param {string} tooltip
+     */
     var createCheckboxWithTooltip = function (name, value, label, checked, tooltip) {
         var html = [
             '<div class="form-check">',
@@ -29,6 +41,16 @@ var uiUtils = (function () {
         return Handlebars.compile(html)(data);
     };
 
+    /**
+     * Generates html markup for a checkbox with a link
+     *
+     * @param {string} name
+     * @param {string} value
+     * @param {string} label
+     * @param {boolean} checked
+     * @param {string} linkName
+     * @param {string} linkUrl
+     */
     var createCheckboxWithLink = function (name, value, label, checked, linkName, linkUrl) {
         var html = [
             '<div class="form-check">',

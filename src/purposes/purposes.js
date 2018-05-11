@@ -58,25 +58,25 @@ var purposesCtrl = (function () {
         onPurposeSelectionChanged();
 
         // "accept all" button handler
-        $('.cmp-purposes .cmp-button-acceptall').click(function () {
+        $('.cmp-purposes .cmp-btn-acceptall').click(function () {
             consentData.setAllPurposeConsents(true);
             __cmpui('renderView', 'vendors');
         });
 
         // "accept all" button handler for 2nd button
-        $('.cmp-purposes .cmp-button-acceptall-alt').click(function () {
+        $('.cmp-purposes .cmp-btn-acceptall-alt').click(function () {
             consentData.setAllPurposeConsents(true);
             __cmpui('renderView', 'vendors');
         });
 
         // "save" button handler
-        $('.cmp-purposes .cmp-button-save').click(function () {
+        $('.cmp-purposes .cmp-btn-save').click(function () {
             savePurposes();
             __cmpui('renderView', 'vendors');
         });
 
         // "reject all" button handler
-        $('.cmp-purposes .cmp-button-rejectall').click(function () {
+        $('.cmp-purposes .cmp-btn-rejectall').click(function () {
             savePurposes();
             __cmpui('renderView', 'confirm');
         });

@@ -4,7 +4,12 @@
  * Licensed under the terms of the MIT license. See LICENSE file in project root for terms.
  */
 
-var consentData = (function (win) {
+/**
+ * Data model the web-safe base64 encoded IAB consent string.
+ * This model provides methods for configuring, encoding and
+ * decoding the consent string.
+ */
+var consentData = (function () {
     var fieldSize = {
         version: 6,
         created: 36,
@@ -363,7 +368,7 @@ var consentData = (function (win) {
           @ created: Date (stored as 36bit deciseconds)
           @ lastUpdated: Date (stored as 36bit deciseconds)
           # cmpId: 12bit-int
-          # cmpVersion: 6bit-int
+          # cmpVersion: 12bit-int
           * consentScreen: 6bit-int
           * consentLanguage: String ("en") (stored as 12bit encoding)
           * vendorListVersion: 12bit-int
@@ -450,6 +455,6 @@ var consentData = (function (win) {
             fields = Data.setAll(value);
         }
     };
-})(window);
+})();
 
 export default consentData;

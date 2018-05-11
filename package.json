@@ -1,24 +1,24 @@
 {
-  "name": "gdpr-consent",
-  "version": "2.0.2",
-  "description": "Quantcast's reference implementation of an IAB compliant GDPR consent manager",
+  "name": "cmpuiforoath",
+  "version": "1.0.0",
+  "description": "Oath's reference implementation of an IAB compliant GDPR consent manager",
   "main": "cmpui.js",
   "scripts": {
     "build": "webpack --env prod",
-    "start": "webpack-dev-server --open --env dev --public mydev.aol.com:8081 --port=8081",
+    "start": "webpack-dev-server --port=8081",
     "test": "karma start karma.conf.js --single-run",
     "format:js": "prettier --single-quote --print-width 100 --write 'src/**/*.js'"
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:quantcast/GDPR-Consent.git"
+    "url": "git@github.com:aol/cmpuiforoath.git"
   },
   "keywords": [
-    "GDPR"
+    "GDPR",
+    "CMP"
   ],
   "license": "",
   "devDependencies": {
-    "bootstrap": "^4.1.0",
     "clean-webpack-plugin": "^0.1.17",
     "copy-webpack-plugin": "^4.3.1",
     "css-loader": "^0.28.8",

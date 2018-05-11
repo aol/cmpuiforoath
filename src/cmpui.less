@@ -4,37 +4,33 @@
  * Licensed under the terms of the MIT license. See LICENSE file in project root for terms.
  */
 
-/**
- * Bootstrap overrides
- */
-
 html, body {
   height: 100%;
   margin: 0;
 }
 
-.cmp-button-small {
+.cmp-btn-sm {
   flex: 1;
   width: 150px;
   max-width: 150px;
   height: 56px;
 }
 
-.cmp-button-medium {
+.cmp-btm-md {
   flex: 1;
   width: 200px;
   max-width: 200px;
   height: 56px;
 }
 
-.cmp-button-large {
+.cmp-btn-lg {
   flex: 1;
   width: 300px;
   max-width: 300px;
   height: 56px;
 }
 
-.cmp-button-primary {
+.cmp-btn-primary {
   background: #2D6AB1;
   color: #ffffff;
   font-weight: medium;
@@ -43,7 +39,7 @@ html, body {
   cursor: pointer;
 }
 
-.cmp-button-default {
+.cmp-btn-default {
   background: #ffffff;
   border: 1px solid #2D6AB1;
   color: #2D6AB1;
@@ -53,7 +49,7 @@ html, body {
   cursor: pointer;
 }
 
-.cmp-button-link {
+.cmp-btn-link {
   color: #006CB7;
   background: #ffffff;
   font-size: 22px;
@@ -101,7 +97,7 @@ html, body {
       margin: auto;
       height: 100%;
 
-      .cmp-image-container {
+      .cmp-img-container {
         padding-right: 30px;
         margin: 0 auto;
         height: 353px;
@@ -110,7 +106,7 @@ html, body {
         min-height: 353px;
         flex: 1;
 
-        .cmp-image {
+        .cmp-img {
           width: 100%;
           height: 100%;
           background-repeat: no-repeat;
@@ -143,7 +139,7 @@ html, body {
         }
       }
 
-      .cmp-button-bar {
+      .cmp-btn-bar {
         display: flex;
         margin-top: 30px;
         margin-bottom: 30px;
@@ -154,12 +150,12 @@ html, body {
       }
 
       &.no-selections {
-        .cmp-button-acceptall {
-          .cmp-button-primary;
+        .cmp-btn-acceptall {
+          .cmp-btn-primary;
         }
 
-        .cmp-button-acceptall-alt,
-        .cmp-button-save {
+        .cmp-btn-acceptall-alt,
+        .cmp-btn-save {
           display: none;
         }
       }
@@ -168,7 +164,7 @@ html, body {
 
   .cmp-tooltip-icon {
     display: inline-block;
-    background-image: url('/images/Questionmark.svg');
+    background-image: url('./images/Questionmark.svg');
     background-repeat: no-repeat;
     background-position: center;
     vertical-align: middle;
@@ -178,11 +174,11 @@ html, body {
     margin-left: 5px;
   }
 
-  .cmp-button-acceptall-alt {
+  .cmp-btn-acceptall-alt {
     display: none;
   }
 
-  .cmp-button-save {
+  .cmp-btn-save {
     display: inline-block;
   }
 }
@@ -195,7 +191,7 @@ html, body {
       .cmp-view {
         padding: 20px 0 !important;
 
-        .cmp-image-container {
+        .cmp-img-container {
           margin: 10px auto 40px auto !important;
           padding-right: 0 !important;
           width: 100% !important;
@@ -216,7 +212,7 @@ html, body {
           }
         }
 
-        .cmp-button-bar {
+        .cmp-btn-bar {
           display: flex;
           position: fixed;
           flex-direction: row-reverse;
@@ -231,7 +227,7 @@ html, body {
             width: auto !important;
             margin: 0 !important;
 
-            &.cmp-button-default {
+            &.cmp-btn-default {
               border-top: 1px solid #ccc;
             }
           }
@@ -240,33 +236,33 @@ html, body {
     }
   }
 
-  .cmp-button-small,
-  .cmp-button-medium,
-  .cmp-button-large {
+  .cmp-btn-sm,
+  .cmp-btm-md,
+  .cmp-btn-lg {
     max-width: none !important;
   }
 
-  .cmp-button-acceptall,
-  .cmp-button-back {
+  .cmp-btn-acceptall,
+  .cmp-btn-back {
     display: none;
   }
 
-  .cmp-button-acceptall-alt {
-    .cmp-button-link;
+  .cmp-btn-acceptall-alt {
+    .cmp-btn-link;
     float: right;
     display: inline-block !important;
   }
 
-  .cmp-button-save {
+  .cmp-btn-save {
     display: inline-block;
   }
 
   &.no-selections {
-    .cmp-button-acceptall {
+    .cmp-btn-acceptall {
       display: inline-block;
-      .cmp-button-primary;
+      .cmp-btn-primary;
     }
-    .cmp-button-save {
+    .cmp-btn-save {
       display: none;
     }
   }

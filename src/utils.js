@@ -4,9 +4,20 @@
  * Licensed under the terms of the MIT license. See LICENSE file in project root for terms.
  */
 
+/**
+ * General utility methods
+ */
 var utils = (function () {
+    /**
+     * Converts query string into object of key/values
+     *
+     * @param queryString
+     * @returns {object}
+     */
     var parseQuery = function (queryString) {
         var query = {};
+
+        // strip out leading "?"
         if (queryString[0] === '?') {
             queryString = queryString.substring(1);
         }
@@ -21,16 +32,25 @@ var utils = (function () {
         return query;
     };
 
-    var isNumeric = function(n) {
-        return !isNaN(parseFloat(n)) && isFinite(n);
-    };
-
-    var logMessage = function (type, args) {
+    /**
+     * Browser compatible method for logging messages.  Some browsers (IE)
+     * do not support console messages at all times
+     *
+     * @param {string} type - "log", "error", or "info"
+     * @param {*} value - value to
+     */
+    var logMessage = function (type, value) {
         if (console && (typeof console[type] === 'function')) {
-            console[type](args);
+            console[type](value);
         }
     };
 
+    /**
+     * Browser compatible method for listening for message events
+     *
+     * @param {window} win
+     * @param {function} handler
+     */
     var addWindowMessageListener = function (win, handler) {
         win = win || window;
         if (win.addEventListener) {
@@ -40,46 +60,12 @@ var utils = (function () {
         }
     };
 
-    function ajax(url, callback) {
-        var xhr = window.XMLHttpRequest ?
-            new XMLHttpRequest() :
-            new ActiveXObject('Microsoft.XMLHTTP');
-
-        var success = function () {
-            var status = typeof xhr.status !== 'undefined' ?
-                xhr.status :
-                200;
-            var response = xhr.responseText;
-            try {
-                response = status === 200 ?
-                    JSON.parse(xhr.responseText) :
-                    undefined;
-            } catch (e) {
-            }
-
-            callback(response, status);
-        };
-
-        if (window.XDomainRequest) {
-            xhr = new XDomainRequest();
-            xhr.onload = success;
-        }
-
-        xhr.onreadystatechange = function (e) {
-            if (xhr.readyState === 4) {
-                success();
-            }
-        };
-
-        try {
-            xhr.open('GET', url, true);
-            xhr.send(null);
-        }
-        catch (e) {
-            callback(undefined, 0);
-        }
-    }
-
+    /**
+     * Parses data passed via postMessage calls.
+     *
+     * @param {string|object} data - json string or object
+     * @returns {*}
+     */
     var parsePostMessageData = function (data) {
         var json = data;
         if (typeof data === "string") {
@@ -93,10 +79,8 @@ var utils = (function () {
 
     return {
         parseQuery: parseQuery,
-        isNumeric: isNumeric,
         logMessage: logMessage,
         addWindowMessageListener: addWindowMessageListener,
-        ajax: ajax,
         parsePostMessageData: parsePostMessageData
     }
 })();

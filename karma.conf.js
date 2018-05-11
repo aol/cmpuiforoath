@@ -13,8 +13,8 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      './test/!(cmpOath)/*.js',
-       {pattern: './src/!(cmpOath)/*.js', included: true}
+      './test/**/*.js',
+       {pattern: './src/**/*.js', included: true}
     ],
 
     // list of files / patterns to exclude
@@ -24,8 +24,8 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      './src/!(cmpOath)/*.js': ['webpack','coverage'],
-      './test/!(cmpOath)/*.js': ['webpack']
+      './src/**/*.js': ['webpack','coverage'],
+      './test/**/*.js': ['webpack']
     },
 
     webpack: webpackConfig,

@@ -5,25 +5,36 @@
  */
 
 import 'style-loader!./cmpui.less';
+
+// main
 import 'style-loader!./main/main.less';
+import mainCtrl from './main/main';
+import mainView from 'html-loader?minimize=true!./main/main.html';
+
+// purposes
+import purposesCtrl from './purposes/purposes';
+import purposesView from 'html-loader?minimize=true!./purposes/purposes.html';
 import 'style-loader!./purposes/purposes.less';
+
+// vendors
+import vendorsCtrl from './vendors/vendors';
+import vendorsView from 'html-loader?minimize=true!./vendors/vendors.html';
 import 'style-loader!./vendors/vendors.less';
+
+// confirm
+import confirmCtrl from './confirm/confirm';
+import confirmView from 'html-loader?minimize=true!./confirm/confirm.html';
 import 'style-loader!./confirm/confirm.less';
 
-import mainView from 'html-loader?minimize=true!./main/main.html';
-import purposesView from 'html-loader?minimize=true!./purposes/purposes.html';
-import vendorsView from 'html-loader?minimize=true!./vendors/vendors.html';
-import confirmView from 'html-loader?minimize=true!./confirm/confirm.html';
+// models
+import consentData from './consentData';
+import vendorListService from './vendorListService';
 
-import mainCtrl from './main/main';
-import purposesCtrl from './purposes/purposes';
-import vendorsCtrl from './vendors/vendors';
-import confirmCtrl from './confirm/confirm';
+// utilities
+import utils from './utils';
 
-import consentData from '../consentData';
-import vendorListService from '../vendorListService';
-
-import utils from '../utils';
+// publisher configurations
+import publisherConfig from './publisherConfig';
 
 window.__cmpui = new function (win) {
     if (win.__cmpui) {
@@ -31,7 +42,7 @@ window.__cmpui = new function (win) {
     }
 
     // When this UI is rendered as a standalone page, a redirect url
-    // will be passed as a query paramter and stored in this variable
+    // will be passed as a query parameter and stored in this variable
     var redirectUrl;
 
     // These views represent the 4 screens in the consent UI flow
@@ -46,7 +57,7 @@ window.__cmpui = new function (win) {
     var prevViewName = null;
 
     // When this UI is rendered in an iframe, a __cmpUICall message will
-    // be send to this frame via postMessage with a "renderConsents" commanmd.
+    // be sent to this frame via postMessage with a "renderConsents" command.
     // The message data will include a callId property, which is stored
     // in this variable.  It will be used when sending the __cmpUIReturn
     // message to the parent frame after the user has saved their consent
@@ -54,27 +65,15 @@ window.__cmpui = new function (win) {
 
     // The postMessage data may be in either a JSON string or an object.
     // The response to the parent frame should be in the same format as
-    // the format of the message send to this frame
+    // the format of the message sent to this frame
     var postMessageStringFormat = false;
 
-    // TODO: This should be updated to provide a publisher specific whitelist.
-    // This whitelist is intended to prevent an attack on an open redirect
-    // vulnerability, in the scenario where the CMP JS redirects to this
-    // UI as a standalone page (as opposed to loading it in an iframe)
-    // This whitelist should include publisher domains that are integrated
-    // with the CMP
-    var WHITELISTED_REDIRECT_DOMAINS = [
-        'oath.com',
-        'aol.com',
-        'yahoo.com'
-    ];
-
-    var renderConsentUI = function (skipInitialScreen) {
+    var renderConsentUI = function (siteDomain, skipInitialScreen) {
         // fetch the vendor list data
-        vendorListService.getVendorList(null, function (vendorList, success) {
+        vendorListService.getVendorList(siteDomain, function (vendorList, success) {
             // API failed, bail out
             if (!success) {
-                utils.logMessage('error', 'failed to load vendor list for GDPR consent');
+                utils.logMessage('error', 'CMP Error: failed to load vendor list for GDPR consent');
                 dismissConsentUi(false);
                 return;
             }
@@ -88,53 +87,56 @@ window.__cmpui = new function (win) {
                 }
             }
             consentData.setMaxVendorId(maxVendorId);
+
+            // set vendor list version for use when encoding the consent string
             consentData.setVendorListVersion(vendorList.vendorListVersion);
 
             // pass the purposes and vendors to the relevant controllers
             purposesCtrl.setPurposes(vendorList.purposes);
             vendorsCtrl.setVendors(vendorList.vendors);
 
-            if (skipInitialScreen) {
-                renderView('purposes');
-            } else {
-                // render the initial view
-                renderView('main');
-            }
+            // render
+            renderView(skipInitialScreen ? 'purposes' : 'main');
         });
     };
 
     // check if the redirect_url query parameter (when rendered on a standalone
     // page) matches a domain on the whitelist
     var isValidRedirectUrl = function (url) {
-        for (var d in WHITELISTED_REDIRECT_DOMAINS) {
-            if (url.split(/[\?#]/)[0].indexOf(WHITELISTED_REDIRECT_DOMAINS[d]) >= 0) {
+        var whitelist = publisherConfig.whitelistedRedirectDomains;
+        for (var d in publisherConfig.whitelistedRedirectDomains) {
+            if (url.split(/[\?#]/)[0].indexOf(whitelist[d]) >= 0) {
                 return true;
             }
         }
         return false;
     };
 
-    // initialization logic
+    // initialisation logic
     var init = function () {
         // check for redirect_url query parameter
-        var queryParams = utils.parseQuery(window.location.search);
+        var queryParams = utils.parseQuery(win.location.search);
         redirectUrl = decodeURIComponent(queryParams.redirect_url || '');
 
-        if (redirectUrl && isValidRedirectUrl(redirectUrl)) {
-            // check for an EuConsent query parameter.  If it exists, then the
-            // user has previously provided their consents.  This scenario occurs
-            // when the user chooses to update or revoke their existing consents.
-            // Typically this option is avaiable from the publishers privacy page.
-            var consentString = queryParams.EuConsent;
-            if (consentString) {
-                // Update the consentData model with the existing consent string
-                consentData.setAll(consentString);
-            }
+        if (redirectUrl) {
+            if (isValidRedirectUrl(redirectUrl)) {
+                // check for an EuConsent query parameter.  If it exists, then the
+                // user has previously provided their consents.  This scenario occurs
+                // when the user chooses to update or revoke their existing consents.
+                // Typically this option is available from the publishers privacy page.
+                var consentString = queryParams.EuConsent;
+                if (consentString) {
+                    // Update the consentData model with the existing consent string
+                    consentData.setAll(consentString);
+                }
 
-            // if redirect_url exists on the page, then this is running as a
-            // standalone page, don't wait for a post message.  Just render
-            // the UI immediately
-            renderConsentUI(!!consentString);
+                // if redirect_url exists on the page, then this is running as a
+                // standalone page, don't wait for a post message.  Just render
+                // the UI immediately
+                renderConsentUI(null, !!consentString);
+            } else {
+                utils.logMessage('error', 'CMP Error: The redirect_url is either missing or not whitelisted.');
+            }
             return;
         }
 
@@ -168,14 +170,16 @@ window.__cmpui = new function (win) {
                     }
 
                     // render the UI
-                    renderConsentUI(!!consentString);
+                    renderConsentUI(parameter.siteDomain, !!consentString);
                 }
             }
         });
     };
 
-    // dismiss the consent UI.  This is called once the user has saved their
-    // consent preferences.
+    /**
+     * Dismiss the consent UI.  This is called when the user has saved their
+     * consent preferences.
+     */
     var dismissConsentUi = function (success) {
         // generate the consent string
         var consentString = success ? consentData.build() : undefined;
@@ -187,7 +191,7 @@ window.__cmpui = new function (win) {
             var queryParamStr = urlHasParams ? '&' : '?';
             queryParamStr += 'EuConsent=' + encodeURIComponent(consentString);
 
-            window.location.replace(redirectUrl + queryParamStr);
+            win.location.replace(redirectUrl + queryParamStr);
             return;
         }
 
@@ -206,14 +210,17 @@ window.__cmpui = new function (win) {
 
         // post the message back to the parent frame.  This provides the
         // consent string to the CMP JS
-        window.parent.postMessage(postMessageStringFormat ?
+        win.parent.postMessage(postMessageStringFormat ?
             JSON.stringify(responseObj) : responseObj, '*');
     };
 
-    // renders one of the views in the consent flow
+    /**
+     * renders one of the views in the consent flow
+     *
+     * @param {string} viewName - "main", "purposes", "vendors", or "confirm"
+     */
     var renderView = function (viewName) {
         var consentUi = document.getElementsByClassName('cmp-body')[0];
-
         consentUi.innerHTML = views[viewName].html;
 
         if (views[viewName].ctrl.render) {
@@ -223,24 +230,29 @@ window.__cmpui = new function (win) {
         curViewName = viewName;
     };
 
+    /**
+     * Switches to previous view
+     */
     var renderPreviousView = function () {
         renderView(prevViewName);
     };
 
+    /**
+     * User has saved their preferences, dismiss the UI
+     */
     var save = function () {
         dismissConsentUi(true);
     };
 
+    // execute initialisation logic
     init();
 
     // api methods
-    var api = function (cmd) {
+    return function (cmd) {
         return {
             renderView: renderView,
             renderPreviousView: renderPreviousView,
             save: save
         }[cmd].apply(null, [].slice.call(arguments, 1));
     };
-
-    return api;
 }(window);

@@ -58,31 +58,31 @@ var vendorsCtrl = (function (win) {
         onVendorSelectionChanged();
 
         // "accept all" button handler
-        $('.cmp-vendors .cmp-button-acceptall').click(function() {
+        $('.cmp-vendors .cmp-btn-acceptall').click(function() {
             consentData.setAllVendorConsents(true);
             win.__cmpui('save');
         });
 
         // "accept all" button handler for 2nd button
-        $('.cmp-vendors .cmp-button-acceptall-alt').click(function() {
+        $('.cmp-vendors .cmp-btn-acceptall-alt').click(function() {
             consentData.setAllVendorConsents(true);
             win.__cmpui('save');
         });
 
         // "save" button handler
-        $('.cmp-vendors .cmp-button-save').click(function() {
+        $('.cmp-vendors .cmp-btn-save').click(function() {
             saveVendors();
             win.__cmpui('save');
         });
 
         // "reject all" button handler
-        $('.cmp-vendors .cmp-button-rejectall').click(function () {
+        $('.cmp-vendors .cmp-btn-rejectall').click(function () {
             saveVendors();
             __cmpui('renderView', 'confirm');
         });
 
         // "back to purposes" button handler
-        $('.cmp-vendors .cmp-button-back').click(function () {
+        $('.cmp-vendors .cmp-btn-back').click(function () {
             saveVendors();
             __cmpui('renderView', 'purposes');
         });
