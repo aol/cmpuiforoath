@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!-- include the cmp3p.js script -->
+    <script src="https://consent.cmp.oath.com/cmp3p.js"></script>
+
+    <!-- [for demo purposes only], clear cookies each time the page loads -->
+    <script>
+        document.cookie = 'EuConsent=; path=/; Max-Age=0';
+        document.cookie = 'cmp=; path=/; Max-Age=0';
+    </script>
+
+</head>
+<body>
+
+<h1>Demo Publisher Page</h1>
+
+<!-- initialize the CMP -->
+<script>
+    // gdprAppliesGlobally should be set on sites that target EU users
+    // uiUrl is the URL to the consent UI.  In this case, it is pointing
+    //      to the locally hosted UI
+    window.__cmp('init', {
+        gdprAppliesGlobally: true,
+        uiUrl: 'http://localhost:8081/cmpui.html'
+    });
+</script>
+
+<!-- [for demo purposes only] view the generated consent data provided by the CMP.
+     This is typically called by ad tags or other scripts loaded on the page. -->
+<script>
+    window.__cmp('getConsentData', null, function (response, success) {
+        var el = document.getElementById('getConsentData-response');
+        el.innerHTML = '<pre>' + JSON.stringify(response, null, 4) + '</pre>';
+
+    });
+</script>
+
+<h4>getConsentData response:</h4>
+<div id="getConsentData-response"></div>
+</body>
+</html>
