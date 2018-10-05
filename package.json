@@ -29,6 +29,7 @@
     "jquery": "^3.0.0",
     "less": "^3.8.1",
     "less-loader": "*",
+    "lodash": "^4.17.11",
     "prettier": "^1.14.3",
     "secure-handlebars": "1.2.1",
     "style-loader": "^0.19.1",
