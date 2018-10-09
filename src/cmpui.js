@@ -87,6 +87,7 @@ window.__cmpui = new function (win) {
                 }
             }
             consentData.setMaxVendorId(maxVendorId);
+            consentData.setMaxPurposeId(vendorList.purposes.length);
 
             // set vendor list version for use when encoding the consent string
             consentData.setVendorListVersion(vendorList.vendorListVersion);

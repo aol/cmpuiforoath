@@ -383,10 +383,15 @@ var consentData = (function () {
 
     var fields = {vendorConsents: []};
 
+    var maxPurposeId = 5;
+
     /* consentData functions. Fields described above. Fields are a singleton */
     return {
         setMaxVendorId: function (num) {
             fields.maxVendorId = num;
+        },
+        setMaxPurposeId: function(num) {
+            maxPurposeId = num;
         },
         /* set vendorId (1-based) to consentState (true/false) */
         setVendorConsent: function (consentState, vendorId) {
@@ -413,7 +418,7 @@ var consentData = (function () {
                 : fields.purposesAllowed & ~mask;
         },
         setAllPurposeConsents: function (consentState) {
-            for (var purposeId = 1; purposeId <= 24; purposeId++) {
+            for (var purposeId = 1; purposeId <= maxPurposeId; purposeId++) {
                 var mask = 1 << (fieldSize.purposesAllowed - purposeId);
                 fields.purposesAllowed = consentState
                     ? fields.purposesAllowed | mask
