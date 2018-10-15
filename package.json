@@ -1,6 +1,6 @@
 {
   "name": "cmpuiforoath",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Oath's reference implementation of an IAB compliant GDPR consent manager",
   "main": "cmpui.js",
   "scripts": {
